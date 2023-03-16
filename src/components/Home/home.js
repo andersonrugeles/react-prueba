@@ -23,7 +23,13 @@ export default function Home() {
     let storageCart = localStorage.getItem("cart");
     let body = [];
     if (!storageCart) {
-      body = [{ user: user.email, products: [{ ...product, cantidad: 1 }] }];
+      body = [
+        {
+          user: user.email,
+          products: [{ ...product, cantidad: 1 }],
+          total: product.cost,
+        },
+      ];
       setAddCart(addCar + 1);
     } else {
       let storages = JSON.parse(storageCart);
@@ -37,6 +43,7 @@ export default function Home() {
         body.push({
           user: user.email,
           products: [{ ...product, cantidad: 1 }],
+          total: product.cost,
         });
       }
     }
@@ -49,12 +56,13 @@ export default function Home() {
       (cart) => cart.id === product.id
     );
     if (index != -1) {
-      storages[indexUser].products[index].cantidad =
-        storages[indexUser].products[index].cantidad + 1;
+      let cantidad = storages[indexUser].products[index].cantidad + 1;
+      storages[indexUser].products[index].cantidad = cantidad;
     } else {
       setAddCart(addCar + 1);
       storages[indexUser].products.push({ ...product, cantidad: 1 });
     }
+    storages[indexUser].total = storages[indexUser].total + product.cost;
     return storages;
   };
 

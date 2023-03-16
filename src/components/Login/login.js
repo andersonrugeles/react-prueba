@@ -21,7 +21,7 @@ export default function Login() {
     confirm({
       title: "Email o password incorrectos",
       icon: <ExclamationCircleFilled />,
-      content: "Some descriptions",
+      content: "¡Intenta de nuevo!",
       onOk() {},
     });
   };
@@ -40,10 +40,9 @@ export default function Login() {
     );
     if (validation) {
       setUser({ ...values });
-    } else {
-      setUser({ ...values });
       navigate("home");
-      //showConfirm();
+    } else {
+      showConfirm();
     }
   };
 
